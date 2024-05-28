@@ -34,14 +34,22 @@ public class RegisterActivity extends AppCompatActivity {
             String password = et_password.getText().toString().trim();
 
             if (!username.isEmpty() && !password.isEmpty()) {
-                dbConfig.insertData(username, password);
-
-                Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                finish();
+                if (dbConfig.isUsernameExists(username)) {
+                    et_username.setError("Username already exists");
+                } else {
+                    try {
+                        dbConfig.insertData(username, password, "", "-"); // Assuming phone and address are default or need to be added by the user
+                        Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
             } else {
                 if (username.isEmpty()) {
                     et_username.setError("Please enter your username");
-                } else {
+                }
+                if (password.isEmpty()) {
                     et_password.setError("Please enter your password");
                 }
             }

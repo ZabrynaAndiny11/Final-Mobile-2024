@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AyoMakan"
         tools:targetApi="31">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReviewsActivity"
             android:exported="false" />
         <activity
