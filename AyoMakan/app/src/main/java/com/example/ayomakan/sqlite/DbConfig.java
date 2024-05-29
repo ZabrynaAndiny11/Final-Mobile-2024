@@ -14,7 +14,7 @@ public class DbConfig extends SQLiteOpenHelper {
     private static final String TAG = "DbConfig";
 
     private static final String DATABASE_NAME = "database-restaurant";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String TABLE_NAME = "restaurant";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";  // corrected from "usename" to "username"
@@ -22,6 +22,10 @@ public class DbConfig extends SQLiteOpenHelper {
     public static final String COLUMN_PHONE = "phone";
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_IS_LOGGED_IN = "isLoggedIn";
+    //fav table
+    public static final String FAVORITES_TABLE_NAME = "favorite";
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_RESTO_ID = "resto_id";
 
     public DbConfig(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,17 +33,18 @@ public class DbConfig extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            db.execSQL("CREATE TABLE " + TABLE_NAME + " ("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_USERNAME + " TEXT,"  // corrected
-                    + COLUMN_PASSWORD + " TEXT,"
-                    + COLUMN_PHONE + " TEXT,"  // changed to TEXT to handle phone numbers correctly
-                    + COLUMN_ADDRESS + " TEXT,"
-                    + COLUMN_IS_LOGGED_IN + " INTEGER DEFAULT 0)");
-        } catch (Exception e) {
-            Log.e(TAG, "Error creating table", e);
-        }
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " ("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_USERNAME + " TEXT,"
+                + COLUMN_PASSWORD + " TEXT,"
+                + COLUMN_PHONE + " TEXT,"
+                + COLUMN_ADDRESS + " TEXT,"
+                + COLUMN_IS_LOGGED_IN + " INTEGER DEFAULT 0)");
+
+        db.execSQL("CREATE TABLE " + FAVORITES_TABLE_NAME + " ("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_USER_ID + " INTEGER,"
+                + COLUMN_RESTO_ID + " TEXT)");
     }
 
     public void insertData(String username, String password, String phone, String address) {  // added phone and address parameters
@@ -47,10 +52,10 @@ public class DbConfig extends SQLiteOpenHelper {
         try {
             db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(COLUMN_USERNAME, username);  // corrected
+            values.put(COLUMN_USERNAME, username);
             values.put(COLUMN_PASSWORD, password);
-            values.put(COLUMN_PHONE, phone);  // added
-            values.put(COLUMN_ADDRESS, address);  // added
+            values.put(COLUMN_PHONE, phone);
+            values.put(COLUMN_ADDRESS, address);
             values.put(COLUMN_IS_LOGGED_IN, 0);
             db.insert(TABLE_NAME, null, values);
         } catch (Exception e) {
@@ -97,30 +102,6 @@ public class DbConfig extends SQLiteOpenHelper {
         return exists;
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    }
-
-    public String getTableName() {
-        return TABLE_NAME;
-    }
-
-    public String getColumnId() {
-        return COLUMN_ID;
-    }
-
-    public String getColumnUsername() {
-        return COLUMN_USERNAME;
-    }
-
-    public String getColumnPhone() {
-        return COLUMN_PHONE;
-    }
-
-    public String getColumnAddress() {
-        return COLUMN_ADDRESS;
-    }
-
     // Method to get the username of the logged-in user
     public String getUsername() {
         SQLiteDatabase db = null;
@@ -144,5 +125,29 @@ public class DbConfig extends SQLiteOpenHelper {
             }
         }
         return username;
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    public String getColumnId() {
+        return COLUMN_ID;
+    }
+
+    public String getColumnUsername() {
+        return COLUMN_USERNAME;
+    }
+
+    public String getColumnPhone() {
+        return COLUMN_PHONE;
+    }
+
+    public String getColumnAddress() {
+        return COLUMN_ADDRESS;
     }
 }

@@ -45,18 +45,19 @@ public class DetailActivity extends AppCompatActivity {
     private DrinkAdapter drinkAdapter;
     private List<CustomerReview> customerReviews;
     private List<MenuItem> foodList, drinkList;
-    private ProgressBar progressBar;
     private RecyclerView rv_reviews, rv_food, rv_drink;
     private ImageView ivResto, iv_back, ivArrowDown, ivArrowDown1, iv_send;
     private TextView tvName, tvDescription, tvCity, tvAddress, tvRating, tvError;
     private Button btnMenuFood, btnMenuDrink, btnRetry;
-    private Context context;
     private TextInputEditText et_addReview;
-    private String restoId;
-    private DbConfig dbConfig;
-    private String username;
+    private ProgressBar progressBar;
     private LinearLayout llDetailContent;
+    private Context context;
+    private String restoId;
+    private String username;
+    private DbConfig dbConfig;
     private CardView cvFav;
+    private boolean isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,13 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No restaurant ID received", Toast.LENGTH_SHORT).show();
         }
+
+//        isFavorite = dbConfig.isFavorite(loggedInUserId, bookModel.getBookIsbn());
+//
+//        if (isFavorite) {
+//            ivLove.setEnabled(false);
+//            ivLove.setImageResource(R.drawable.love);
+//        }
 
         iv_back.setOnClickListener(v -> finish());
 

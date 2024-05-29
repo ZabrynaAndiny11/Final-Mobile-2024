@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.ayomakan.fragment.FavoriteFragment;
 import com.example.ayomakan.fragment.HomeFragment;
 import com.example.ayomakan.fragment.ProfileFragment;
 import com.example.ayomakan.fragment.SearchFragment;
@@ -46,6 +47,8 @@ public class HomeActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.searchbtn) {
                 selectedFragment = new SearchFragment();
+            } else if (item.getItemId() == R.id.favbtn) {
+                selectedFragment = new FavoriteFragment();
             } else if (item.getItemId() == R.id.profilebtn) {
                 selectedFragment = new ProfileFragment();
             }

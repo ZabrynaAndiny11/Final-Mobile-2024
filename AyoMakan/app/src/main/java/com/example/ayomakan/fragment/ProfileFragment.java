@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
         tv_welcome = view.findViewById(R.id.tv_welcome);
         tv_name = view.findViewById(R.id.tv_name);
         tv_number = view.findViewById(R.id.tv_number);
-        tv_address = view.findViewById(R.id.tv_addres);
+        tv_address = view.findViewById(R.id.tv_address);
         btn_change = view.findViewById(R.id.btn_edit);
         iv_delete = view.findViewById(R.id.iv_delete);
 

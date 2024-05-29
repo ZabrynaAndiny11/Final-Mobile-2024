@@ -23,7 +23,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@+id/tv_profile"
+            android:layout_below="@id/tv_profile"
             android:layout_marginTop="17dp"
             android:background="#A59077" />
 
@@ -31,76 +31,52 @@
             android:id="@+id/viewTitle"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@+id/tv_profile"
+            android:layout_below="@id/tv_profile"
             android:layout_marginTop="24dp"
             android:background="#A59077" />
-
 
         <ImageView
             android:id="@+id/img_logo"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_below="@+id/viewTitle"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="-2dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="589dp"
+            android:layout_below="@id/viewTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ayomakan" />
 
         <TextView
             android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewTitle"
+            android:layout_below="@id/img_logo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="20dp"
             android:text="Hai,"
             android:textColor="#A59077"
             android:textSize="25sp"
             android:textStyle="bold" />
 
-
-        <Button
-            android:id="@+id/btn_edit"
-            android:layout_width="127dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="259dp"
-            android:layout_marginBottom="288dp"
-            android:backgroundTint="#C7B7A3"
-            android:text="Edit Profile"
-            android:textColor="@color/white"/>
-
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/tv_welcome"
             android:layout_marginStart="24dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="347dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="20dp"
             android:background="#FFFAE6"
             android:orientation="vertical"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Username :"
@@ -116,17 +92,12 @@
                     android:textColor="#6F4E37"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="6dp"
+                android:layout_margin="10dp"
                 android:background="#D9D9D9" />
 
             <LinearLayout
@@ -155,13 +126,9 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="6dp"
+                android:layout_margin="10dp"
                 android:background="#D9D9D9" />
 
             <LinearLayout
@@ -171,7 +138,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="219dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Address :"
@@ -179,7 +146,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_addres"
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -188,45 +155,35 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="6dp"
-                android:background="#D9D9D9" />
-
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#C7B7A3"
+            android:text="Edit Profile"
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/iv_delete"
-            android:layout_width="149dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="353dp"
-            android:layout_marginTop="251dp"
-            android:layout_marginEnd="29dp"
-            android:layout_marginBottom="560dp"
+            android:layout_below="@id/btn_edit"
+            android:layout_marginLeft="335dp"
+            android:layout_marginTop="-314dp"
             android:src="@drawable/baseline_delete_24" />
 
         <ImageView
             android:id="@+id/btn_logout"
-            android:layout_width="29dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="365dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="787dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/baseline_logout_24" />
     </RelativeLayout>
 </FrameLayout>
