@@ -24,7 +24,6 @@ public class Resto implements Parcelable {
     @SerializedName("rating")
     private float rating;
 
-    // Getter dan Setter
     public String getId() {
         return id;
     }
@@ -73,7 +72,6 @@ public class Resto implements Parcelable {
         this.rating = rating;
     }
 
-    // Parcelable implementation
     protected Resto(Parcel in) {
         id = in.readString();
         name = in.readString();

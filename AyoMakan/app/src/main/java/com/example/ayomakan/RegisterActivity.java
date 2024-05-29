@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
                     et_username.setError("Username already exists");
                 } else {
                     try {
-                        dbConfig.insertData(username, password, "", "-"); // Assuming phone and address are default or need to be added by the user
+                        dbConfig.insertData(username, password, "-", "-");
                         Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (Exception e) {

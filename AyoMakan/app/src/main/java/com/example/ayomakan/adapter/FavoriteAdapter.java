@@ -1,28 +1,29 @@
 package com.example.ayomakan.adapter;
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.ayomakan.DetailActivity;
 import com.example.ayomakan.R;
 import com.example.ayomakan.model.Resto;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
-public class RestoItemAdapter extends RecyclerView.Adapter<RestoItemAdapter.RestoViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.RestoViewHolder> {
 
-    private List<Resto> restoItemList;
+    private final FragmentManager fragmentManager;
+    private List<Resto> restoList;
+    private final int userId;
 
-    public RestoItemAdapter(List<Resto> restoItemList) {
-        this.restoItemList = restoItemList;
+    public FavoriteAdapter(FragmentManager fragmentManager, List<Resto> restoList,int userId) {
+        this.fragmentManager = fragmentManager;
+        this.restoList = restoList;
+        this.userId = userId;
     }
 
     @NonNull
@@ -34,13 +35,13 @@ public class RestoItemAdapter extends RecyclerView.Adapter<RestoItemAdapter.Rest
 
     @Override
     public void onBindViewHolder(@NonNull RestoViewHolder holder, int position) {
-        Resto restoItem = restoItemList.get(position);
+        Resto restoItem = restoList.get(position);
         holder.bind(restoItem);
     }
 
     @Override
     public int getItemCount() {
-        return restoItemList.size();
+        return restoList.size();
     }
 
     static class RestoViewHolder extends RecyclerView.ViewHolder {

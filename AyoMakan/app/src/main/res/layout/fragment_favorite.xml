@@ -7,15 +7,47 @@
     tools:context=".fragment.FavoriteFragment">
 
     <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ayomakan"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Favorite"
+            android:textColor="#A59077"
+            android:textSize="28sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#A59077"
+        android:layout_marginTop="100dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#A59077"
+        android:layout_marginTop="105dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="108dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_resto"
             android:layout_width="match_parent"
-            android:layout_height="710dp"
+            android:layout_height="660dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_resto3"/>
 
@@ -28,4 +60,21 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/iv_noResto"
+        android:layout_width="420dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:src="@drawable/norestofav"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:text="Please check your internet connection"/>
 </FrameLayout>

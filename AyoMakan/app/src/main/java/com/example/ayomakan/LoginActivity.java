@@ -2,6 +2,7 @@ package com.example.ayomakan;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -62,10 +63,16 @@ public class LoginActivity extends AppCompatActivity {
                      new String[]{username, password},
                      null, null, null)) {
 
-            if (cursor.moveToFirst()) {
-                updateLoginStatus(username, true);
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
+            // perubahan no.2
+            if (cursor != null && cursor.moveToFirst()) {
+                int idColumnIndex = cursor.getColumnIndex(DbConfig.COLUMN_ID);
+                if (idColumnIndex != -1) {
+                    int userId = cursor.getInt(idColumnIndex);
+                    loginSuccess(userId); // Menyimpan ID pengguna yang berhasil login
+                    updateLoginStatus(username, true);
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                }
             } else {
                 Toast.makeText(this, "Incorrect Username or Password", Toast.LENGTH_SHORT).show();
             }
@@ -101,5 +108,13 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    // perubahan no.1
+    private void loginSuccess(int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("user_id", userId);
+        editor.apply();
     }
 }

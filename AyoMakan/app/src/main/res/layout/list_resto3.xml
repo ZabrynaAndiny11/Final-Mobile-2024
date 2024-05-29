@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="140dp"
     android:layout_margin="10dp"
     card_view:cardCornerRadius="18dp"
     card_view:cardElevation="8dp">
@@ -29,7 +29,7 @@
             android:layout_marginTop="25dp"
             android:text="Restaurant"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/black"/>
 
         <LinearLayout
@@ -42,15 +42,15 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/baseline_location_pin_24"/>
 
             <TextView
                 android:id="@+id/tv_cityResto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/black"
                 android:text="city"/>
@@ -65,8 +65,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp">
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/baseline_star_rate_24"/>
             <TextView
                 android:id="@+id/tv_ratingResto"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="Rating Resto"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"
                 android:layout_below="@+id/City"/>
         </LinearLayout>

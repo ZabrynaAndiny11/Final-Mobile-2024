@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -60,28 +61,20 @@ public class EditProfileActivity extends AppCompatActivity {
                 return;
             }
 
-            Integer phoneNumber = null;
             if (number.isEmpty()) {
-                phoneNumber = 0;  // Default value for phoneNumber
-            } else {
-                try {
-                    phoneNumber = Integer.parseInt(number);
-                } catch (NumberFormatException e) {
-                    Toast.makeText(EditProfileActivity.this, "Please enter a valid number", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                number = "-";
             }
-
             if (address.isEmpty()) {
-                address = "-";  // Default value for address
+                address = "-";
             }
 
-            saveUserData(name, phoneNumber, address);
+            saveUserData(name, number, address);
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             finish();
-            Toast.makeText(EditProfileActivity.this, "Data successfully saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileActivity.this, "Profile edited successfully", Toast.LENGTH_SHORT).show();
         });
+
     }
 
     private void loadUserData() {
@@ -95,26 +88,32 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             String name = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_USERNAME));
-            int phone = cursor.getInt(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_PHONE));
+            String phone = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_PHONE));  // Get phone as string
             String address = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_ADDRESS));
 
+            Log.d("EditProfileActivity", "Loaded user data - Name: " + name + ", Phone: " + phone + ", Address: " + address);
+
             et_name.setText(name);
-            et_number.setText(String.valueOf(phone));
+            et_number.setText(phone);  // Set phone directly
             et_address.setText(address);
+        } else {
+            Log.d("EditProfileActivity", "No user data found for logged in user");
         }
 
         cursor.close();
         db.close();
     }
 
-    private void saveUserData(String name, int number, String address) {
+    private void saveUserData(String name, String number, String address) {
         SQLiteDatabase db = dbConfig.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DbConfig.COLUMN_USERNAME, name);
-        values.put(DbConfig.COLUMN_PHONE, number);
+        values.put(DbConfig.COLUMN_PHONE, number);  // Store phone as string
         values.put(DbConfig.COLUMN_ADDRESS, address);
 
-        db.update(DbConfig.TABLE_NAME, values, DbConfig.COLUMN_IS_LOGGED_IN + " = ?", new String[]{"1"});
+        int rowsUpdated = db.update(DbConfig.TABLE_NAME, values, DbConfig.COLUMN_IS_LOGGED_IN + " = ?", new String[]{"1"});
+        Log.d("EditProfileActivity", "Rows updated: " + rowsUpdated);
+
         db.close();
     }
 }

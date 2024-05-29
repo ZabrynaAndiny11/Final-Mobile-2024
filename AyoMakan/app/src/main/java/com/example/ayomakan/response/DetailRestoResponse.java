@@ -34,4 +34,3 @@ public class DetailRestoResponse {
         DetailResto = detailResto;
     }
 }
-

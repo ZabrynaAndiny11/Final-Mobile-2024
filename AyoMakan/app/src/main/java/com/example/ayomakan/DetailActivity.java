@@ -2,6 +2,8 @@ package com.example.ayomakan;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import com.example.ayomakan.api.ApiConfig;
 import com.example.ayomakan.api.ApiService;
 import com.example.ayomakan.model.CustomerReview;
 import com.example.ayomakan.model.MenuItem;
+import com.example.ayomakan.model.Resto;
 import com.example.ayomakan.response.DetailRestoResponse;
 import com.example.ayomakan.response.ReviewResponse;
 import com.example.ayomakan.sqlite.DbConfig;
@@ -46,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
     private List<CustomerReview> customerReviews;
     private List<MenuItem> foodList, drinkList;
     private RecyclerView rv_reviews, rv_food, rv_drink;
-    private ImageView ivResto, iv_back, ivArrowDown, ivArrowDown1, iv_send;
+    private ImageView ivResto, iv_back, ivArrowDown, ivArrowDown1, iv_send, btn_favorit;
     private TextView tvName, tvDescription, tvCity, tvAddress, tvRating, tvError;
     private Button btnMenuFood, btnMenuDrink, btnRetry;
     private TextInputEditText et_addReview;
@@ -84,6 +87,7 @@ public class DetailActivity extends AppCompatActivity {
         ivArrowDown1 = findViewById(R.id.iv_arrow_down1);
         et_addReview = findViewById(R.id.et_addReview);
         iv_send = findViewById(R.id.iv_send);
+        btn_favorit = findViewById(R.id.btn_fav);
         tvError = findViewById(R.id.error);
         btnRetry = findViewById(R.id.retry);
         llDetailContent = findViewById(R.id.ll_detail_content);
@@ -109,13 +113,6 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No restaurant ID received", Toast.LENGTH_SHORT).show();
         }
 
-//        isFavorite = dbConfig.isFavorite(loggedInUserId, bookModel.getBookIsbn());
-//
-//        if (isFavorite) {
-//            ivLove.setEnabled(false);
-//            ivLove.setImageResource(R.drawable.love);
-//        }
-
         iv_back.setOnClickListener(v -> finish());
 
         btnMenuFood.setOnClickListener(v -> {
@@ -138,7 +135,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
         ivArrowDown1.setOnClickListener(v -> {
             if (tvDescription.getVisibility() == View.VISIBLE) {
                 tvDescription.setVisibility(View.GONE);
@@ -151,10 +147,27 @@ public class DetailActivity extends AppCompatActivity {
 
         btnRetry.setOnClickListener(v -> fetchRestoDetail(restoId));
 
+        //perubahan
+        btn_favorit.setOnClickListener(v -> {
+            toggleFavorite();
+        });
+
         iv_send.setOnClickListener(v -> {
             String reviewText = et_addReview.getText().toString();
             postReview(reviewText, username);
         });
+
+        //perubahan
+        String restoId = getIntent().getStringExtra("RESTO_ID");
+        if (restoId != null && !restoId.isEmpty()) {
+            fetchRestoDetail(restoId);
+            int loggedInUserId = getLoggedInUserId();
+            isFavorite = isRestoFavorit(loggedInUserId, restoId);
+            updateFavoriteIcon();
+        } else {
+            Toast.makeText(this, "No restaurant ID received", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -249,5 +262,59 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get()
                 .load("https://restaurant-api.dicoding.dev/images/medium/" + resto.getDetailResto().getPictureId())
                 .into(ivResto);
+    }
+
+    //perubahan
+    private void toggleFavorite() {
+        int loggedInUserId = getLoggedInUserId();
+        String restoId = getIntent().getStringExtra("RESTO_ID");
+
+        if (restoId != null && !restoId.isEmpty()) {
+            if (isFavorite) {
+                dbConfig.deleteFavorite(loggedInUserId, restoId);
+                btn_favorit.setImageResource(R.drawable.baseline_favorite_border_24);
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                dbConfig.insertFavorite(loggedInUserId, restoId);
+                btn_favorit.setImageResource(R.drawable.baseline_favorite_24);
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            }
+            isFavorite = !isFavorite;
+        } else {
+            Toast.makeText(this, "No restaurant ID received", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //perubahan
+    private void updateFavoriteIcon() {
+        if (isFavorite) {
+            btn_favorit.setImageResource(R.drawable.baseline_favorite_24);
+        } else {
+            btn_favorit.setImageResource(R.drawable.baseline_favorite_border_24);
+        }
+    }
+
+    //perubahan
+    private boolean isRestoFavorit(int userId, String restoId) {
+        Cursor cursor = dbConfig.getFavoriteRestoUserId(userId);
+        boolean isFavorite = false;
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String resto = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_RESTO_ID));
+                if (resto.equals(restoId)) {
+                    isFavorite = true;
+                    break;
+                }
+            }
+            cursor.close();
+        }
+        return isFavorite;
+    }
+
+    //perubahan
+    private int getLoggedInUserId() {
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("user_id", -1);
     }
 }

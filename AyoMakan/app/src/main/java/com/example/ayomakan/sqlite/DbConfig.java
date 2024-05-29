@@ -76,7 +76,7 @@ public class DbConfig extends SQLiteOpenHelper {
             Log.e(TAG, "Error deleting record", e);
         } finally {
             if (db != null) {
-                db.close();  // close the database
+                db.close();
             }
         }
     }
@@ -125,6 +125,36 @@ public class DbConfig extends SQLiteOpenHelper {
             }
         }
         return username;
+    }
+
+    // Methods for handling favorite functionality
+    public void insertFavorite(int userId, String restoId) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, userId);
+        values.put(COLUMN_RESTO_ID, restoId ) ;
+        db.insert(FAVORITES_TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public boolean isFavorite(int userId, String restoId) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(FAVORITES_TABLE_NAME, new String[]{COLUMN_ID}, COLUMN_USER_ID + " = ? AND " + COLUMN_RESTO_ID + " = ?", new String[]{String.valueOf(userId), restoId}, null, null, null);
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    public Cursor getFavoriteRestoUserId(int userId) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(FAVORITES_TABLE_NAME, null, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(userId)}, null, null, null);
+    }
+
+    public void deleteFavorite(int userId, String restoId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(FAVORITES_TABLE_NAME, COLUMN_USER_ID + " = ? AND " + COLUMN_RESTO_ID + " = ?", new String[]{String.valueOf(userId), String.valueOf(restoId)});
+        db.close();
     }
 
     @Override
