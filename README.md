@@ -1,6 +1,6 @@
 # AyoMakan
 
-AyoMakan adalah aplikasi yang menyediakan informasi tentang cafe dan restaurant di berbagai kota. Tujuan utamanya adalah memungkinkan pengguna menemukan berbagai pilihan restoran, melihat menu, lokasi, serta membaca ulasan dari pengguna lainnya. 
+AyoMakan adalah aplikasi yang menyediakan informasi tentang cafe dan restaurant di berbagai kota. Tujuan utamanya adalah memungkinkan pengguna menemukan berbagai pilihan restoran, melihat menu, lokasi, serta membaca ulasan dari pelanggan lainnya. 
 
 Aplikasi ini bertujuan memberikan informasi yang diperlukan agar pengguna dapat membuat keputusan yang tepat sebelum mengunjungi restoran tersebut. Dengan fitur ulasan dan rating, pengguna dapat memilih restoran berdasarkan pengalaman orang lain, sehingga meningkatkan kepuasan mereka dalam pengalaman bersantap.
 
