@@ -29,7 +29,21 @@ public class DbConfig extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " ("
+        db.execSQL("CREATE TABLE " + TABLE_NAME +
+
+
+
+
+
+
+
+
+
+
+
+
+
+                " ("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_USERNAME + " TEXT,"
                 + COLUMN_PASSWORD + " TEXT,"
