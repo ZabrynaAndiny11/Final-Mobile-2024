@@ -1,17 +1,11 @@
 package com.example.ayomakan.adapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.ayomakan.R;
 import com.example.ayomakan.model.CustomerReview;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {

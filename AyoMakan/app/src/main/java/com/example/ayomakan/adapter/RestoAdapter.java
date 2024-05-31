@@ -24,7 +24,6 @@ public class RestoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RestoAdapter(List<Resto> restoList) {
         this.restoList = restoList;
     }
-
     public RestoAdapter(List<Resto> restoList, boolean isTopRated) {
         this.restoList = restoList;
         this.isTopRated = isTopRated;

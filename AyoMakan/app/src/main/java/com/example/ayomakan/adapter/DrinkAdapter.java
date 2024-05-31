@@ -11,7 +11,6 @@ import com.example.ayomakan.model.MenuItem;
 import java.util.List;
 
 public class DrinkAdapter extends RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>{
-
     private List<MenuItem> drinks;
 
     public DrinkAdapter(List<MenuItem> drinks) {

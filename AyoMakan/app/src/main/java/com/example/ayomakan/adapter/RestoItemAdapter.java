@@ -18,7 +18,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class RestoItemAdapter extends RecyclerView.Adapter<RestoItemAdapter.RestoViewHolder> {
-
     private List<Resto> restoItemList;
 
     public RestoItemAdapter(List<Resto> restoItemList) {
