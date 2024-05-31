@@ -1,25 +1,25 @@
 package com.example.ayomakan.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.example.ayomakan.EditProfileActivity;
 import com.example.ayomakan.LoginActivity;
@@ -27,15 +27,15 @@ import com.example.ayomakan.R;
 import com.example.ayomakan.sqlite.DbConfig;
 
 public class ProfileFragment extends Fragment {
-    TextView tv_welcome, tv_name, tv_number, tv_address;
-    ImageView iv_logout, iv_delete;
-    Button btn_change;
-    DbConfig dbConfig;
-    int recordId;
+
+    private TextView tv_welcome, tv_name, tv_number, tv_address;
+    private ImageView iv_logout, iv_delete;
+    private Button btn_change;
+    private DbConfig dbConfig;
+    private int recordId;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -56,17 +56,35 @@ public class ProfileFragment extends Fragment {
         loadUserData();
 
         iv_logout.setOnClickListener(v -> {
-            showLogoutConfirmationDialog();
+            if (isNetworkAvailable()) {
+                showLogoutConfirmationDialog();
+            } else {
+                Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+            }
         });
 
         iv_delete.setOnClickListener(v -> {
-            dbConfig.deleteRecords(recordId);
-            showDeleteConfirmationDialog();
+            if (isNetworkAvailable()) {
+                dbConfig.deleteRecords(recordId);
+                showDeleteConfirmationDialog();
+            } else {
+                Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btn_change.setOnClickListener(v -> {
-            startActivityForResult(new Intent(getActivity(), EditProfileActivity.class), 1);
+            if (isNetworkAvailable()) {
+                startActivityForResult(new Intent(getActivity(), EditProfileActivity.class), 1);
+            } else {
+                Toast.makeText(getContext(), "No internet connection available", Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void loadUserData() {

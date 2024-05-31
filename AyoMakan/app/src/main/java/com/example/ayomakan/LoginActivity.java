@@ -16,9 +16,7 @@ import com.example.ayomakan.sqlite.DbConfig;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
-
-    TextInputEditText et_username;
-    TextInputEditText et_password;
+    TextInputEditText et_username, et_password;
     Button btn_login;
     TextView tv_register;
     DbConfig dbConfig;
@@ -63,14 +61,14 @@ public class LoginActivity extends AppCompatActivity {
                      new String[]{username, password},
                      null, null, null)) {
 
-            // perubahan no.2
             if (cursor != null && cursor.moveToFirst()) {
                 int idColumnIndex = cursor.getColumnIndex(DbConfig.COLUMN_ID);
                 if (idColumnIndex != -1) {
                     int userId = cursor.getInt(idColumnIndex);
-                    loginSuccess(userId); // Menyimpan ID pengguna yang berhasil login
+                    loginSuccess(userId);
                     updateLoginStatus(username, true);
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
             } else {
@@ -78,6 +76,13 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void loginSuccess(int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("user_id", userId);
+        editor.apply();
     }
 
     private void updateLoginStatus(String username, boolean isLoggedIn) {
@@ -104,17 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                      null, null, null)) {
 
             if (cursor.getCount() > 0) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
         }
-    }
-
-    // perubahan no.1
-    private void loginSuccess(int userId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("user_id", userId);
-        editor.apply();
     }
 }

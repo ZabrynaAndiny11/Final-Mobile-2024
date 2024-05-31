@@ -11,8 +11,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextInputEditText et_username;
-    TextInputEditText et_password;
+    TextInputEditText et_username, et_password;
     TextView tv_login;
     Button btn_register;
     DbConfig dbConfig;

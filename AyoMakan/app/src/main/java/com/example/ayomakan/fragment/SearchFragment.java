@@ -1,16 +1,14 @@
 package com.example.ayomakan.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +37,6 @@ public class SearchFragment extends Fragment {
     private RestoItemAdapter itemRestoAdapter;
     private List<Resto> filteredRestos;
     private ProgressBar progressBar;
-    private Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,8 +82,7 @@ public class SearchFragment extends Fragment {
                     ivNoResto.setVisibility(View.GONE);
                     tvNetwork.setVisibility(View.GONE);
 
-                    handler.removeCallbacksAndMessages(null);
-                    handler.postDelayed(() -> searchRestos(newText), 1000);
+                    searchRestos(newText);
                 }
                 return true;
             }
@@ -97,7 +93,7 @@ public class SearchFragment extends Fragment {
         Call<RestoSearchResponse> call = apiService.searchResto(query);
         call.enqueue(new Callback<RestoSearchResponse>() {
             @Override
-            public void onResponse(Call<RestoSearchResponse> call, Response<RestoSearchResponse> response) {
+            public void onResponse(@NonNull Call<RestoSearchResponse> call, Response<RestoSearchResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 ivNoResto.setVisibility(View.GONE);
 

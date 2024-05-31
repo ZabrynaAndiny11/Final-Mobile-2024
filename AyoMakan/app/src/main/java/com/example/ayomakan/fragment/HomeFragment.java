@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,13 +60,12 @@ public class HomeFragment extends Fragment {
         rvResto.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvResto2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        loadDataDefault();
         loadDataRating();
-        loadDataList();
     }
 
-    private void loadDataRating() {
+    private void loadDataDefault() {
         progressBar.setVisibility(View.VISIBLE);
-        progressBar2.setVisibility(View.VISIBLE);
 
         Call<RestoResponse> restoResponseCall = apiService.getResto(1);
         restoResponseCall.enqueue(new Callback<RestoResponse>() {
@@ -75,16 +73,11 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<RestoResponse> call, Response<RestoResponse> response) {
                 handler.post(() -> {
                     progressBar.setVisibility(View.GONE);
-                    progressBar2.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null) {
                         List<Resto> restoList = response.body().getRestoList();
                         if (restoList != null && !restoList.isEmpty()) {
                             RestoAdapter adapter = new RestoAdapter(restoList);
                             rvResto.setAdapter(adapter);
-
-                            Collections.sort(restoList, (r1, r2) -> Double.compare(r2.getRating(), r1.getRating()));
-                            RestoAdapter topRatedAdapter = new RestoAdapter(restoList, true);
-                            rvResto2.setAdapter(topRatedAdapter);
                         } else {
                             Toast.makeText(getContext(), "No restaurant data available", Toast.LENGTH_SHORT).show();
                         }
@@ -105,20 +98,24 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void loadDataList() {
-        progressBar.setVisibility(View.VISIBLE);
+    private void loadDataRating() {
+        progressBar2.setVisibility(View.VISIBLE);
 
         Call<RestoResponse> restoResponseCall = apiService.getResto(1);
         restoResponseCall.enqueue(new Callback<RestoResponse>() {
             @Override
             public void onResponse(Call<RestoResponse> call, Response<RestoResponse> response) {
                 handler.post(() -> {
-                    progressBar.setVisibility(View.GONE);
+                    progressBar2.setVisibility(View.GONE);
                     if (response.isSuccessful() && response.body() != null) {
                         List<Resto> restoList = response.body().getRestoList();
                         if (restoList != null && !restoList.isEmpty()) {
                             RestoAdapter adapter = new RestoAdapter(restoList);
-                            rvResto.setAdapter(adapter);
+                            rvResto2.setAdapter(adapter);
+
+                            Collections.sort(restoList, (r1, r2) -> Double.compare(r2.getRating(), r1.getRating()));
+                            RestoAdapter topRatedAdapter = new RestoAdapter(restoList, true);
+                            rvResto2.setAdapter(topRatedAdapter);
                         } else {
                             Toast.makeText(getContext(), "No restaurant data available", Toast.LENGTH_SHORT).show();
                         }

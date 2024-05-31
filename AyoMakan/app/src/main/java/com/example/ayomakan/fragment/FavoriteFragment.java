@@ -92,7 +92,7 @@ public class FavoriteFragment extends Fragment {
             } while (cursor.moveToNext());
         }
 
-        Call<RestoResponse> call = service.getResto(1); // Change the call type to RestoResponse
+        Call<RestoResponse> call = service.getResto(1);
         call.enqueue(new Callback<RestoResponse>() {
             @Override
             public void onResponse(@NonNull Call<RestoResponse> call, @NonNull Response<RestoResponse> response) {

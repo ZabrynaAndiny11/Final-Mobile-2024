@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,7 +23,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText et_name, et_number, et_address;
     Button btn_simpan;
     ImageView iv_back;
-    private DbConfig dbConfig;
+    DbConfig dbConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,18 +87,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             String name = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_USERNAME));
-            String phone = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_PHONE));  // Get phone as string
+            String phone = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_PHONE));
             String address = cursor.getString(cursor.getColumnIndexOrThrow(DbConfig.COLUMN_ADDRESS));
 
-            Log.d("EditProfileActivity", "Loaded user data - Name: " + name + ", Phone: " + phone + ", Address: " + address);
-
             et_name.setText(name);
-            et_number.setText(phone);  // Set phone directly
+            et_number.setText(phone);
             et_address.setText(address);
-        } else {
-            Log.d("EditProfileActivity", "No user data found for logged in user");
         }
-
         cursor.close();
         db.close();
     }
@@ -108,12 +102,10 @@ public class EditProfileActivity extends AppCompatActivity {
         SQLiteDatabase db = dbConfig.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DbConfig.COLUMN_USERNAME, name);
-        values.put(DbConfig.COLUMN_PHONE, number);  // Store phone as string
+        values.put(DbConfig.COLUMN_PHONE, number);
         values.put(DbConfig.COLUMN_ADDRESS, address);
 
-        int rowsUpdated = db.update(DbConfig.TABLE_NAME, values, DbConfig.COLUMN_IS_LOGGED_IN + " = ?", new String[]{"1"});
-        Log.d("EditProfileActivity", "Rows updated: " + rowsUpdated);
-
+        db.update(DbConfig.TABLE_NAME, values, DbConfig.COLUMN_IS_LOGGED_IN + " = ?", new String[]{"1"});
         db.close();
     }
 }

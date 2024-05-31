@@ -26,7 +26,6 @@ public interface ApiService {
     Call<RestoSearchResponse> searchResto(@Query("q") String query);
 
     @FormUrlEncoded
-    @Headers("Authorization: token 12345")
     @POST("review")
     Call<ReviewResponse> postReview(@Field("id") String id, @Field("name") String name, @Field("review") String review);
 }

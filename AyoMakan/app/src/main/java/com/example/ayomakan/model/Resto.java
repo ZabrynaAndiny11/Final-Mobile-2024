@@ -1,28 +1,23 @@
 package com.example.ayomakan.model;
 
-import com.google.gson.annotations.SerializedName;
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class Resto implements Parcelable {
-
-    @SerializedName("id")
+public class Resto implements Serializable {
     private String id;
-
-    @SerializedName("name")
     private String name;
-
-    @SerializedName("description")
     private String description;
-
-    @SerializedName("city")
     private String city;
-
-    @SerializedName("pictureId")
     private String pictureId;
-
-    @SerializedName("rating")
     private float rating;
+
+    public Resto(String id, String name, String description, String city, String pictureId, float rating) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.city = city;
+        this.pictureId = pictureId;
+        this.rating = rating;
+    }
 
     public String getId() {
         return id;
@@ -70,41 +65,5 @@ public class Resto implements Parcelable {
 
     public void setRating(float rating) {
         this.rating = rating;
-    }
-
-    protected Resto(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        description = in.readString();
-        city = in.readString();
-        pictureId = in.readString();
-        rating = in.readFloat();
-    }
-
-    public static final Creator<Resto> CREATOR = new Creator<Resto>() {
-        @Override
-        public Resto createFromParcel(Parcel in) {
-            return new Resto(in);
-        }
-
-        @Override
-        public Resto[] newArray(int size) {
-            return new Resto[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(city);
-        dest.writeString(pictureId);
-        dest.writeFloat(rating);
     }
 }
